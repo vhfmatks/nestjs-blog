@@ -1,0 +1,52 @@
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name" : "admin",
+  "password" : "1234",
+  "roles" : ["user", "admin"]
+}
+
+###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "user" :"admin",
+  "password" : "1234"
+}
+###
+
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwicm9sZXMiOlsiYWRtaW4iLCJ1c2VyIl0sImlhdCI6MTY3MDI0MTY2NiwiZXhwIjoxNjcwMzI4MDY2fQ.l9D3sGUqYuH96X2dGL2xCN7g9zpXlu5eaC8DwACTZzw
+GET http://localhost:3000/auth/me
+Content-Type: application/json
+Authorization: Bearer {{token}} 
+###
+GET http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "username" : "yhchoi",
+  "password" : "1234"
+}
+
+###
+GET http://localhost:3000/users/admin HTTP/1.1
+
+###
+
+POST http://localhost:3000/users/roles
+Content-Type: application/json
+
+{
+  "name": "user"
+}
+
+###
+
+GET http://localhost:3000/users/test
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:3000/users/admin

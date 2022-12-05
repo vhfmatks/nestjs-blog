@@ -15,24 +15,23 @@ export class UsersService {
     private userRepository: Repository<User>,
     @InjectRepository(Role)
     private roleRepository: Repository<Role>,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     const { name, password, roles } = createUserDto;
 
     //const newUserRoles = roles.map((role) => this.roleRepository.findOneBy({ name: role }))
-    const newUserRoles =
-      await this.roleRepository
-        .createQueryBuilder()
-        .where("name IN (:...name)", { name: roles })
-        .getMany();
+    const newUserRoles = await this.roleRepository
+      .createQueryBuilder()
+      .where('name IN (:...name)', { name: roles })
+      .getMany();
     console.log(newUserRoles);
 
     const newUser = new User();
     newUser.name = name;
     newUser.password = password;
     newUser.roles = newUserRoles;
-    return await this.userRepository.save(newUser)
+    return await this.userRepository.save(newUser);
   }
   async createRole(createRoleDto: CreateRoleDto) {
     const { name } = createRoleDto;
@@ -62,8 +61,8 @@ export class UsersService {
       .getOne();
     return {
       ...user,
-      roles: user.roles.map(role => role.name)
-    }
+      roles: user.roles.map((role) => role.name),
+    };
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

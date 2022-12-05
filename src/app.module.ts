@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
     }),
     UsersModule,
     TypeOrmModule.forRoot({
@@ -17,11 +17,11 @@ import { ConfigModule } from '@nestjs/config';
       database: 'sqlite.db',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
-      logging: true
+      logging: true,
     }),
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

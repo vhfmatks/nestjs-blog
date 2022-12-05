@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Request,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -7,11 +19,14 @@ import { AuthGuard } from '@nestjs/passport';
 import { RetrieveUserDto } from './dto/retrieve-user.dto';
 import { TestDto } from './dto/test.dto';
 import { Public } from 'src/decorators/public.decorator';
+import { Role, Roles } from 'src/decorators/roles.decorator';
+import { RolesGuard } from 'src/guards/roles.guards';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
+  @Public()
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
@@ -33,12 +48,14 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @Roles(Role.Admin)
+  @UseGuards(RolesGuard)
   @Get('test')
   async findTest(): Promise<TestDto> {
     return new TestDto({
       firstName: '123',
       lastName: 'abc',
-      password: 'bba'
+      password: 'bba',
     });
   }
 

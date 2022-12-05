@@ -13,10 +13,10 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.guards';
     UsersService,
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard
-    }
+      useClass: JwtAuthGuard,
+    },
   ],
   controllers: [UsersController],
-  exports: [UsersService]
+  exports: [UsersService],
 })
-export class UsersModule { }
+export class UsersModule {}
